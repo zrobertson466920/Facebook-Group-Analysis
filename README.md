@@ -6,7 +6,7 @@ A collection of methods to analyze Facebook group chat data.
 Installation
 ------------
 
-* Option 1: 
+* Option 1
 
 
     ```
