@@ -1,5 +1,5 @@
-import fgroupchat as fg
-from fgroupchat import Timeline
+import fgroupanalysis as fg
+from fgroupanalysis import Timeline
 
 def main():
 
