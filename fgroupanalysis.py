@@ -195,8 +195,7 @@ def activity_plot(timestamps,time_difference = 0):
     for stamp in timestamps:
         temp = datetime.datetime.fromtimestamp(stamp)
         times.append((temp.hour+temp.minute / 60 - time_difference) % 24)
-    plt.hist(times,24)
-    plt.show()
+    return times
 
 # Groups Timestamps into Clusters
 # (5-10) ~ are good numbers for min_cluster
