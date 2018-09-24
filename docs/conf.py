@@ -31,7 +31,7 @@ sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)'''
 #MOCK_MODULES = ['numpy','matplotlib.pyplot','ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
 #for mod_name in MOCK_MODULES:
 #    sys.modules[mod_name] = mock.Mock()
-autodoc_mock_imports = ['numpy','matplotlib.pyplot','ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
+autodoc_mock_imports = ['numpy','matplotlib''matplotlib.pyplot','ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
 
 
 # -- Project information -----------------------------------------------------
