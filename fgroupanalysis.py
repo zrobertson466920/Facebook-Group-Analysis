@@ -1,17 +1,11 @@
 # Will fix unicode errors present in the file formatting
 import numpy as np
-import matplotlib.pyplot as plt
 from ftfy import fix_text
 import json
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-import nltk
 
-from sklearn.cluster import DBSCAN
-from sklearn import metrics
-from sklearn.datasets.samples_generator import make_blobs
-from sklearn.preprocessing import StandardScaler
 import hdbscan
 import matplotlib.pyplot as plt
 
