@@ -14,8 +14,13 @@
 #
 import os
 import sys
+import mock
 sys.path.insert(0, os.path.abspath('../'))
-autodoc_mock_imports = ['numpy','matplotlib.pyplot','ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
+
+MOCK_MODULES = ['numpy','matplotlib.pyplot','ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
+#autodoc_mock_imports = ['numpy','matplotlib.pyplot','ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
 
 
 # -- Project information -----------------------------------------------------
