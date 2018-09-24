@@ -21,7 +21,11 @@ from collections import Counter
 
 from wordcloud import WordCloud
 
+
 class Timeline:
+    """ A representation of the group chat ordered by the timestamps
+    """
+
     def __init__(self,data = None,raw = None):
         if data != None:
             timeline = data['messages']
@@ -42,6 +46,12 @@ class Timeline:
 
     # Splits the messages by sender
     def partition(self):
+        """
+        Splits the messages by participant in the group chat
+
+        Returns:
+            dictionary: A dictionary of timelines sorted by participant name.
+        """
         actors = []
         timelines = {}
         for message in self.messages:
