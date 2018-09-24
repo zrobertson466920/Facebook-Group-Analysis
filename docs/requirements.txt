@@ -1,2 +1,3 @@
 sphinxcontrib-napoleon
-MagicMock
+mock
+unittest.mock
