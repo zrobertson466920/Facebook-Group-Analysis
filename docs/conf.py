@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.abspath('../'))
         return MagicMock()
 
 
-MOCK_MODULES = ['numpy','matplotlib.pyplot','ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
+MOCK_MODULES = ['numpy','matplotlib','matplotlib.pyplot,'ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)'''
 
 #MOCK_MODULES = ['numpy','matplotlib.pyplot','ftfy','json','nltk','nltk.corpus','nltk.tokenize','hdbscan','datetime','collections','wordcloud']
