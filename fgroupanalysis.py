@@ -138,9 +138,10 @@ class Timeline:
 
         Args:
             tagger: A boolean value that indicates whether or not to distinguish between
-                    different taggers (e.g. whether or not to sum over the sender index)
+            different taggers (e.g. whether or not to sum over the sender index)
+
             tagged: A boolean value that indicates whether or not to distinguish between
-                    different tag recipients (e.g. whether or not to sum over the tagged index)
+            different tag recipients (e.g. whether or not to sum over the tagged index)
 
         Returns:
             freq: A sorted list of tuples each of the from ((sender, tagged), count)
@@ -183,8 +184,11 @@ class Timeline:
 
         Args:
             num: Decides whether to slice the return list to the first num values
+
             sender: Boolean that decides whether to sum over sender index in tuple
+
             reaction: Boolean that decides whether to sum over reaction index in tuple
+
             receiver: Boolean that decides whether to sum over receiver index in tuple
 
         Returns:
@@ -300,8 +304,9 @@ def common_words(text,plot = False):
 
     Args:
         text: The text to analyze
+
         pl: A boolean that decides whether or not to create
-            a word cloud of the results.
+        a word cloud of the results.
 
     Returns:
         freq: A sorted list of tuples of the form [(word,num)]
@@ -340,7 +345,9 @@ def tag_freq(freq_tuples,num,pl = -1):
     Constructs a frequency list based off of tag_matrix
     Args:
         freq_tuples: The frequency tuple list (with all indices present)
+
         num: Where to slice the list
+
         pl: Plot the results (no return)
 
     Todo:
@@ -399,7 +406,9 @@ def activity_plot(timestamps,time_difference = 0,daily = True):
 
     Args:
         timestamps: List of utc style timestamps (seconds)
+
         time_difference: Compensate for time-zone directly
+
         daily: Decide to make daily or overall activity plot
 
     Returns:
@@ -429,7 +438,9 @@ def cluster(timestamps,min_cluster = 7,plot = False):
 
     Args:
         timestamps: List of timestamps (utc seconds)
+
         min_cluster: Minimum cluster size to consider (5-10 work well)
+        
         plot: Decide whether or not to plot results
 
     Returns:
