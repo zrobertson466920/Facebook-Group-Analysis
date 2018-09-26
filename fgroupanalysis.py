@@ -33,9 +33,10 @@ class Timeline:
             with open(raw) as f:
                 data = json.load(f)
             f.close()
-            timeline = data['messages']
-            timeline.reverse()
-            self.messages = timeline
+            messages = data['messages']
+            messages.reverse()
+            self.messages = messages
+            self.participants = data['participants']
             return
 
     def partition(self):
@@ -78,6 +79,17 @@ class Timeline:
             except:
                 pass
         return word_timeline
+
+    def markov_edges(self):
+        bonds = []
+        for i in range(len(self.messages)-1):
+            name1 = self.messages[i]['sender_name']
+            name2 = self.messages[i+1]['sender_name']
+            bonds.append((name1,name2))
+        freq = Counter(bonds)
+        sorted_by_second = sorted(freq.items(), key=lambda tup: tup[1], reverse=True)
+        freq = sorted_by_second
+        return freq
 
     # Fixes encoding errors
     def to_text(self,file):
@@ -246,9 +258,9 @@ class Timeline:
         for message in self.messages:
             try:
                 if message['content'].find('sent a photo') == -1:
-                    text += "\n" + message['content']
+                    text +=  message['content'] + "\n"
             except:
-                continue
+                pass
         return text
 
 

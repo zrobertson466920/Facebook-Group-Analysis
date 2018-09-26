@@ -6,10 +6,19 @@
 Welcome to Facebook-Group-Analysis's documentation!
 ===================================================
 
+The Facebook Group Analysis library is a collection of tools intended to assist with
+the processing of group chat data. The core of the library is the :py:meth:`~fgroupanalysis.Timeline` class.
+An instance of this class allows for easy manipulation of the timeline and support data from a given
+group chat log.
+
+
+User Guide / Tutorial
+---------------------
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+   basic_usage
 
 
 Indices and tables
