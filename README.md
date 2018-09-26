@@ -1,7 +1,7 @@
 Facebook-Group-Analysis
 ======
 
-A collection of methods to analyze Facebook group chat data.
+A collection of methods to analyze Facebook group chat data. Check out the documentation [here](https://facebook-group-analysis.readthedocs.io/en/latest/)
 
 Installation
 ------------
