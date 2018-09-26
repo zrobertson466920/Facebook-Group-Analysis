@@ -5,9 +5,7 @@ from fgroupanalysis import Timeline
 def main():
 
     # Open and Read File
-    file = open('message.json','r')
-    raw = file.read()
-    timeline = Timeline(raw)
+    timeline = Timeline(raw = 'message.json')
 
     # Splits the Messages By Sender
     timelines = timeline.partition()

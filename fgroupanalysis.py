@@ -81,6 +81,12 @@ class Timeline:
         return word_timeline
 
     def markov_edges(self):
+        """
+        Counts the frequency of user B following user A in the group chat.
+
+        Returns: A list of tuples of the form ((user A, user B), num)
+
+        """
         bonds = []
         for i in range(len(self.messages)-1):
             name1 = self.messages[i]['sender_name']
@@ -113,7 +119,7 @@ class Timeline:
     def message_reacs(self):
         """
         Returns a sorted list of messages by how many reactions they received.
-        Returns: A sorted list, from most to least reacted.
+        Returns: A sorted list, from most to least reacted, each of the form (sender_name, content, num_reactions)
 
         """
         mr_count = []
@@ -288,7 +294,7 @@ def combine(timelines):
 
 
 # Will return the top 'num' words as a list of tuples [(word,num)]
-def common_words(text,pl = False):
+def common_words(text,plot = False):
     """
     Returns a sorted list of the most frequent words from a text collection.
 
@@ -313,8 +319,9 @@ def common_words(text,pl = False):
     freq = Counter(filtered_words)
 
     # Show a plot/list or nothing depending on pl
-    if pl == False:
-        return freq
+    if plot == False:
+        sorted_by_second = sorted(freq.items(), key=lambda tup: tup[1], reverse=True)
+        return sorted_by_second
     else:
         wordcloud = WordCloud(width=1600, height=800).generate_from_frequencies(freq)
         plt.figure(figsize = (20,10), facecolor = 'k')
@@ -323,7 +330,8 @@ def common_words(text,pl = False):
         plt.tight_layout(pad = 0)
         plt.show()
 
-    return freq
+    sorted_by_second = sorted(freq.items(), key=lambda tup: tup[1], reverse=True)
+    return sorted_by_second
 
 
 # Constructs a frequnecy list based off of tag_matrix
