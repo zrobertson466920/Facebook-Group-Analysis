@@ -16,22 +16,33 @@ from collections import Counter
 from wordcloud import WordCloud
 
 
+def parse_obj(obj):
+    for key in obj:
+        if isinstance(obj[key], str):
+            obj[key] = obj[key].encode('latin_1').decode('utf-8')
+        elif isinstance(obj[key], list):
+            obj[key] = list(map(lambda x: x if type(x) != str else x.encode('latin_1').decode('utf-8'), obj[key]))
+        pass
+    return obj
+
+
 class Timeline:
     """ A representation of the group chat ordered by the timestamps
     """
 
-    def __init__(self,data = None,raw = None):
+    def __init__(self,data = None,raw = None,participants = None):
         if data != None:
             timeline = data['messages']
             timeline.reverse()
             self.messages = timeline
+            self.participants = participants
             return
         elif raw == None:
             self.messages = []
             return
         else:
             with open(raw) as f:
-                data = json.load(f)
+                data = json.load(f, object_hook=parse_obj)
             f.close()
             messages = data['messages']
             messages.reverse()
@@ -80,11 +91,12 @@ class Timeline:
                 pass
         return word_timeline
 
-    def markov_edges(self):
+    def markov_edges(self, normalized = True):
         """
         Counts the frequency of user B following user A in the group chat.
 
-        Returns: A list of tuples of the form ((user A, user B), num)
+        Returns:
+            A list of tuples of the form ((user A, user B), num)
 
         """
         bonds = []
@@ -95,6 +107,18 @@ class Timeline:
         freq = Counter(bonds)
         sorted_by_second = sorted(freq.items(), key=lambda tup: tup[1], reverse=True)
         freq = sorted_by_second
+
+        if normalized is True:
+            list = self.participants
+            list = [name['name'] for name in list]
+            for name in list:
+                count = 0
+                for i, tup in enumerate(freq):
+                    if tup[0][0] == name and tup[0][1] != name:
+                        count += tup[1]
+                for i, tup in enumerate(freq):
+                    if tup[0][0] == name and tup[0][1] != name:
+                        freq[i] = (tup[0], tup[1] / count)
         return freq
 
     # Fixes encoding errors
@@ -119,7 +143,9 @@ class Timeline:
     def message_reacs(self):
         """
         Returns a sorted list of messages by how many reactions they received.
-        Returns: A sorted list, from most to least reacted, each of the form (sender_name, content, num_reactions)
+
+        Returns:
+            A sorted list, from most to least reacted, each of the form (sender_name, content, num_reactions)
 
         """
         mr_count = []
@@ -193,7 +219,7 @@ class Timeline:
 
         Returns:
             freq: A dictionary of reaction frequencies where edges (reaction weighted)
-        are tuples of the form ((sender,reaction,receiver),count)
+            are tuples of the form ((sender,reaction,receiver),count)
 
         """
         reactions = []
@@ -261,6 +287,7 @@ class Timeline:
     def raw_text(self):
         """
         Return the raw text (without saving or fixing formatting)
+
         Returns:
             text: Raw string of timeline text
         """
@@ -294,7 +321,7 @@ def combine(timelines):
     new_messages = sorted(new_messages, key=lambda tup: tup[1],reverse = True)
     new_timeline['messages'] , timestamps = zip(*new_messages)
     new_timeline['messages'] = list(new_timeline['messages'])
-    return Timeline(data = new_timeline)
+    return Timeline(data = new_timeline, participants = timelines[0].participants)
 
 
 # Will return the top 'num' words as a list of tuples [(word,num)]
@@ -305,8 +332,7 @@ def common_words(text,plot = False):
     Args:
         text: The text to analyze
 
-        pl: A boolean that decides whether or not to create
-        a word cloud of the results.
+        pl: A boolean that decides whether or not to create a word cloud of the results.
 
     Returns:
         freq: A sorted list of tuples of the form [(word,num)]
@@ -412,8 +438,7 @@ def activity_plot(timestamps,time_difference = 0,daily = True):
         daily: Decide to make daily or overall activity plot
 
     Returns:
-        times: Returns timestamps converted to either hours or in the case of
-        daily = False returns timestamps unaltered
+        times: Returns timestamps converted to either hours or in the case of daily = False returns timestamps unaltered
 
     Todo:
         It'd be nice to be able to choose a periodicity and have the timestamps
@@ -440,7 +465,7 @@ def cluster(timestamps,min_cluster = 7,plot = False):
         timestamps: List of timestamps (utc seconds)
 
         min_cluster: Minimum cluster size to consider (5-10 work well)
-        
+
         plot: Decide whether or not to plot results
 
     Returns:
